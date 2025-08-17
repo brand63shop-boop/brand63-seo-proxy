@@ -4,6 +4,13 @@ import { google } from "googleapis";
 
 const app = express();
 app.use(express.json({ limit: "5mb" }));
+// Simple shared-secret check
+app.use((req, res, next) => {
+  const need = process.env.PROXY_SECRET;
+  if (!need) return next();
+  if (req.headers["x-proxy-secret"] === need) return next();
+  return res.status(401).json({ error: "Unauthorized" });
+});
 
 // --- Health check ---
 app.get("/health", (_req, res) => res.json({ ok: true }));
