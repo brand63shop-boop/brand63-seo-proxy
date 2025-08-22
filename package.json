@@ -1,12 +1,1 @@
-{
-  "name": "brand63-seo-proxy",
-  "version": "1.0.0",
-  "private": true,
-  "type": "module",
-  "scripts": { "start": "node server.js" },
-  "dependencies": {
-    "express": "^4.19.2",
-    "node-fetch": "^3.3.2",
-    "googleapis": "^131.0.0"
-  }
-}
+
