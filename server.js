@@ -9,8 +9,10 @@ export default async function handler(req, res) {
 
     const client = await auth.getClient();
 
-    // Example: call Search Console API
-    const url = "https://www.googleapis.com/webmasters/v3/sites/https%3A%2F%2Fbrand63.com/searchAnalytics/query";
+    // ✅ Make sure we query the correct property: https://www.brand63.com
+    const url =
+      "https://www.googleapis.com/webmasters/v3/sites/https%3A%2F%2Fwww.brand63.com/searchAnalytics/query";
+
     const body = {
       startDate: "2024-07-01",
       endDate: "2024-07-31",
@@ -18,11 +20,19 @@ export default async function handler(req, res) {
       rowLimit: 10,
     };
 
-    const response = await client.request({ url, method: "POST", data: body });
+    const response = await client.request({
+      url,
+      method: "POST",
+      data: body,
+    });
 
     res.status(200).json(response.data);
   } catch (error) {
-    console.error(error);
+    console.error("GSC API error:", error.message);
+    res.status(500).json({ error: error.message });
+  }
+}
+
     res.status(500).json({ error: error.message });
   }
 }
